@@ -1,5 +1,5 @@
 import pandas as pd
-import datrie
+import pytrie
 import string
 import zipfile
 
@@ -49,22 +49,26 @@ class ChessOpeningMapper:
 
     def create_trie(self, df, opening_column='name', moves_column='plies'):
         """
-        Create a Trie structure from the DataFrame.
+        Create a Trie structure from the DataFrame using pytrie.
         """
-        self.trie = datrie.Trie(string.ascii_letters + string.digits + ' ')
+        self.trie = pytrie.StringTrie()
         for _, row in df.iterrows():
             self.trie[row[moves_column]] = row[opening_column]
 
     def map_opening_moves(self, moves_sequence):
         """
-        Map the opening moves of a game to an opening name.
+        Map the opening moves of a game to an opening name using pytrie.
         """
         if self.trie is None:
             raise ValueError("Trie has not been created. Call create_trie() first.")
         
         moves = ' '.join([move for move in moves_sequence.split() if not move.endswith('.')])
-        opening_name = self.trie.longest_prefix(moves)
-        return self.trie[opening_name] if opening_name in self.trie else None
+        try:
+            # Find the longest prefix that matches the moves
+            return self.trie.longest_prefix_value(moves, default="Unknown Opening")
+        except KeyError:
+            return "Unknown Opening"
+
     
     def process_game_data(self, game_data, max_plies=36):
         move_columns = [f'Move_ply_{i+1}' for i in range(max_plies)]
