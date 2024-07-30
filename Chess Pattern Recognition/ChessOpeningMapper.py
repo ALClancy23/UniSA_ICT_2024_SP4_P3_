@@ -1,6 +1,6 @@
 import pandas as pd
 import pytrie
-import string
+
 import zipfile
 
 class ChessOpeningMapper:
