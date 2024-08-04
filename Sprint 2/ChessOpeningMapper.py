@@ -89,7 +89,7 @@ class ChessOpeningMapper:
     @staticmethod
     def load_openings():
 
-        file_list = ['Chess Pattern Recognition\\a.tsv', 'Chess Pattern Recognition\\b.tsv', 'Chess Pattern Recognition\\c.tsv','Chess Pattern Recognition\\d.tsv', 'Chess Pattern Recognition\\e.tsv']
+        file_list = ['..\\Chess Pattern Recognition\\a.tsv', '..\\Chess Pattern Recognition\\b.tsv', '...\\Chess Pattern Recognition\\c.tsv','.\\Chess Pattern Recognition\\d.tsv', '..\\Chess Pattern Recognition\\e.tsv']
         mapper = ChessOpeningMapper()
         merged_df = mapper.merge_tsv_files(file_list)
         return mapper.split_pgn_to_columns(merged_df)
