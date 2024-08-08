@@ -4,12 +4,23 @@ import pytrie
 import zipfile
 
 class ChessOpeningMapper:
+
     def __init__(self):
         self.trie = None
+        """
+        Initialises the ChessOpeningMapper class.
+        Sets the trie attribute to None, which will later be used to store the trie structure for chess openings.
+        """
 
     def merge_tsv_files(self, file_list):
         """
-        Merge multiple TSV files into a single DataFrame.
+        Merges multiple TSV files into a single DataFrame.
+        
+        Parameters:
+        - file_list (list of str): List of file paths to the TSV files that contain chess opening data.
+        
+        Returns:
+        - pandas.DataFrame: A DataFrame containing merged data from all TSV files.
         """
         dataframes = [pd.read_csv(file, sep='\t') for file in file_list]
         merged_df = pd.concat(dataframes, ignore_index=True)
@@ -17,8 +28,15 @@ class ChessOpeningMapper:
 
     def split_pgn_to_columns(self, df, pgn_column='pgn'):
         """
-        Split PGN into individual moves and create new columns for each ply.
-        """
+        Splits Portable Game Notation (PGN) into individual moves and creates new columns for each move in the DataFrame.
+        
+            Parameters:
+            - df (pandas.DataFrame): DataFrame containing the PGN strings of chess openings.
+            - pgn_column (str): Name of the column containing the PGN strings. Default is 'pgn'.
+        
+            Returns:
+            - pandas.DataFrame: Modified DataFrame with new columns for each move.
+            """
         max_plies = 0
         split_data = []
 
@@ -49,7 +67,12 @@ class ChessOpeningMapper:
 
     def create_trie(self, df, opening_column='name', moves_column='plies'):
         """
-        Create a Trie structure from the DataFrame using pytrie.
+        Creates a Trie structure from a DataFrame to facilitate fast mapping of opening sequences to their names.
+        
+        Parameters:
+        - df (pandas.DataFrame): DataFrame containing the chess opening moves and their corresponding names.
+        - opening_column (str): Column name that contains the opening names.
+        - moves_column (str): Column name that contains the concatenated moves.
         """
         self.trie = pytrie.StringTrie()
         for _, row in df.iterrows():
@@ -57,7 +80,13 @@ class ChessOpeningMapper:
 
     def map_opening_moves(self, moves_sequence):
         """
-        Map the opening moves of a game to an opening name using pytrie.
+        Maps a sequence of opening moves to the corresponding opening name using the Trie structure.
+        
+        Parameters:
+        - moves_sequence (str): A string of concatenated opening moves.
+        
+        Returns:
+        - str: The name of the chess opening, if found; otherwise, returns 'Unknown Opening'.
         """
         if self.trie is None:
             raise ValueError("Trie has not been created. Call create_trie() first.")
@@ -71,6 +100,16 @@ class ChessOpeningMapper:
 
     
     def process_game_data(self, game_data, max_plies=36):
+        """
+        Processes game data by extracting move sequences and converting them into a format suitable for mapping.
+        
+        Parameters:
+        - game_data (pandas.DataFrame): DataFrame containing game data.
+        - max_plies (int): Maximum number of plies (moves) to consider for each game.
+        
+        Returns:
+        - pandas.DataFrame: DataFrame with processed game data.
+        """
         move_columns = [f'Move_ply_{i+1}' for i in range(max_plies)]
         selected_moves_df = game_data[move_columns].copy()
 
@@ -82,6 +121,15 @@ class ChessOpeningMapper:
         return selected_moves_df
 
     def get_opening_name_from_game(self, game_data):
+        """
+        Processes game data to map the move sequences to opening names.
+        
+        Parameters:
+        - game_data (pandas.DataFrame): DataFrame containing the game data with moves.
+        
+        Returns:
+        - pandas.DataFrame: DataFrame with the 'opening_name' column added, containing mapped opening names.
+        """
         selected_moves_df = self.process_game_data(game_data)
         selected_moves_df['opening_name'] = selected_moves_df['move_sequence'].apply(self.map_opening_moves)
         return selected_moves_df
@@ -89,7 +137,7 @@ class ChessOpeningMapper:
     @staticmethod
     def load_openings():
 
-        file_list = ['Chess Pattern Recognition\\a.tsv', 'Chess Pattern Recognition\\b.tsv', 'Chess Pattern Recognition\\c.tsv','Chess Pattern Recognition\\d.tsv', 'Chess Pattern Recognition\\e.tsv']
+        file_list = ['../Chess Pattern Recognition/a.tsv', '../Chess Pattern Recognition/b.tsv', '../Chess Pattern Recognition/c.tsv','../Chess Pattern Recognition/d.tsv', '../Chess Pattern Recognition/e.tsv']
         mapper = ChessOpeningMapper()
         merged_df = mapper.merge_tsv_files(file_list)
         return mapper.split_pgn_to_columns(merged_df)
