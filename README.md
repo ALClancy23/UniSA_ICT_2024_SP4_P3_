@@ -15,7 +15,6 @@ Our repository is organised as follows:
   - [files required to load KNIME pipeline]
     - 200k_blitz_rapid_classical_bullet.zip
     - Knime Pipeline final for Assessment 1c.knwf
-    - chessdata.zip
     - opening_moves.csv
 - Sprint 1/
   - [subfolders and files specific to Sprint 1]
