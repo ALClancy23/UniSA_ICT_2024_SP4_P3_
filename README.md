@@ -15,8 +15,6 @@ Our repository is organised as follows:
   - [files required to load KNIME pipeline]
 - Sprint 1/
   - [subfolders and files specific to Sprint 1]
-  - Chess Pattern Recognition/
-    - [subfolders and files related to chess pattern recognition]
 - Sprint 2/
   - [subfolders and files specific to Sprint 2]
 - Sprint 3/
