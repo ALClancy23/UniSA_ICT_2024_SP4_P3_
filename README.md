@@ -13,9 +13,6 @@ Our repository is organised as follows:
     - workflows/ # GitHub Actions workflows
 - Final Submission/
   - [files required to load KNIME pipeline]
-    - 200k_blitz_rapid_classical_bullet.zip
-    - Knime Pipeline final for Assessment 1c.knwf
-    - opening_moves.csv
 - Sprint 1/
   - [subfolders and files specific to Sprint 1]
   - Chess Pattern Recognition/
