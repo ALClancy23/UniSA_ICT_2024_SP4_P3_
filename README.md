@@ -12,7 +12,7 @@ Our repository is organised as follows:
   - .github/
     - workflows/ # GitHub Actions workflows
 - Final Submission/
-  - [files specific to Final Submission]
+  - [files required to load KNIME pipeline]
     - Knime Pipeline final for Assessment 1c.knwf
     - chessdata.zip
     - opening_moves.csv
