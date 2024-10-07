@@ -11,8 +11,8 @@ Our repository is organised as follows:
 - root
   - .github/
     - workflows/ # GitHub Actions workflows
-- Chess Pattern Recognition/
-  - [subfolders and files related to chess pattern recognition]
+- Final Submission/
+  - [files required to load KNIME pipeline]
 - Sprint 1/
   - [subfolders and files specific to Sprint 1]
 - Sprint 2/
