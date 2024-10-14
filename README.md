@@ -21,6 +21,14 @@ Our repository is organised as follows:
   - [subfolders and files specific to Sprint 3]
 - Sprint 4/
   - [subfolders and files specific to Sprint 4]
+- Sprint 5/
+  - [subfolders and files specific to Sprint 5]
+- Sprint 6/
+  - [subfolders and files specific to Sprint 6]
+- Sprint 7/
+  - [subfolders and files specific to Sprint 7]
+- Sprint 8/
+  - [subfolders and files specific to Sprint 8]
 - .gitignore # Git ignore file
 - README.md # Repository guide and structure
 
